@@ -88,7 +88,7 @@ def quick_file_scan(file, term, chunk_size = 4096000, chunk_limit = 1000):
         while True:
             data = file.read(chunk_size)
             try:
-                if data.index(term):
+                if data.index(term) > -1:
                     found = True
                     break
             except:
@@ -112,7 +112,7 @@ def granular_file_scan(file, term, offset = 770048000, size = 4096, limit = 4096
         while True:
             data = file.read(size)
             try:
-                if data.index(term):
+                if data.index(term) > -1:
                     found = True
                     break
             except:
