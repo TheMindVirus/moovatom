@@ -1,0 +1,23 @@
+moov-# - is at the end of the file
+mvhd-#
+trak-#
+tkhd-#
+mdia-#
+mdhd-#
+hdlr-#
+minf-#
+vmhd-#
+dinf-#
+dref-#
+url-#
+stbl-#
+stsd-#
+avc1-# - one, not avc L
+avcC-#
+stts-#
+stss-# - order is slightly backwards
+ctts-#
+stsc-#
+stsz-#
+stco-#
+mdat-# - is at the beginning of the file
