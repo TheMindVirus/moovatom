@@ -33,4 +33,4 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '2022-10-04 19-11-45-duplicate-moov - Co
     Metadata:
       handler_name    : SoundHandler
       
-# unspecified pixel format : pixel format should be "yuv480p" which is incidentally not what you write to select that option in mp4 metadata
+# unspecified pixel format : pixel format should be "yuv420p" which is incidentally not what you write to select that option in mp4 metadata
