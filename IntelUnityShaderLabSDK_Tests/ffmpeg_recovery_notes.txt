@@ -1,0 +1,30 @@
+ffmpeg -i "2022-10-04 19-11-45.mp4" -metadata title="Astroneer" -metadata frame_width=1280 -metadata frame_height=720 -codec copy out.mp4
+ffmpeg -i "2022-10-04 19-11-45.mp4" -metadata title="Astroneer" -metadata frame_width=1280 -metadata:s:v:0 video_size="1280x720" -codec copy out.mp4
+ffmpeg -i "2022-10-04 19-11-45.mp4" -s hd720 -r 60 -c copy "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -s:v hd720 -r:v 60 -c:v copy "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -s 1280x720 -r 60 -c copy "out.mp4"
+
+neither of these options work or set metadata correctly
+
+ffmpeg -i "2022-10-04 19-11-45.mp4" -s 1280x720 -r 60 -c:v h264 -c:a aac "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -s 1280x720 -r 60 -c:v h264 -an "out.mp4"
+ffmpeg -analyzeduration 2147483647 -probesize 2147483647 -i "2022-10-04 19-11-45.mp4" -s 1280x720 -r 60 -c:v h264 -an "out.mp4"
+
+video is actually 1080p but with blanked out metadata
+
+unspecified format, missing metadata, invalid atom
+
+ffmpeg -i "2022-10-04 19-11-45.mp4" -s 1280x720 -r 60 -c:v h264 -c:a aac -f:v rgb888 "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -vf scale=1280:720 "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -b:v 1200 -an "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -f:v yuv420p -an "out.mp4"
+
+video is yuv420p format but is none in ffmpeg info
+
+ffmpeg -i "2022-10-04 19-11-45.mp4" -vf format=yuv420p -an "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -pix_fmt yuv420p -an "out.mp4"
+ffmpeg -i "2022-10-04 19-11-45.mp4" -vf format=pix_fmts=yuv420p -an "out.mp4"
+ffmpeg -vf format=pix_fmts=yuv420p -i "2022-10-04 19-11-45.mp4" -an "out.mp4"
+
+ffmpeg -pix_fmt yuv420p -i "2022-10-04 19-11-45.mp4" -an "out.mp4"
+this is close but then it says the same thing about missing atoms
