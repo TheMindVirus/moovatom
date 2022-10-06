@@ -1,0 +1,4 @@
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x56372650d280] stream 0, missing mandatory atoms, broken header
+Too many packets buffered for output stream 0:1.
+# Ubuntu 20.04.03 WSL with ffmpeg installed:
+#> ffmpeg -v error -i "2022-10-04 19-11-45-duplicate-moov - Copy.mp4" -f null - > error.log 2>&1
