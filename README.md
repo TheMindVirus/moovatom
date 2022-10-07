@@ -17,3 +17,11 @@ There are a lack of available tools to decode and correctly repair corrupt media
 and as the screenshots show, data is still fairly integral but still fails to be played back. \
 This has been written in the hope that you could use a utility like HxD Hex Editor \
 to fix and recover corrupted digital media files that were encoded incorrectly at source.
+
+# Update
+The solution was found in this case to be an invalid `stsz` header size set to 0 \
+by OBS Studio to indicate an encoding failure. Calculating the number of bytes between \
+the `stsz` and `stco` headers (for video, not audio) and then placing this number in the \
+32-bit (4-byte) gap before the bytes for `stsz` fixed the video making it half playable. \
+The result of this recovery process is available to watch on YouTube at the following link: \
+<pending>
