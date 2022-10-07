@@ -1,4 +1,5 @@
 ![debugging](/indev/debugging.png)
+![error](/indev/error.png)
 ![mandatory_atoms_V2](/indev/mandatory_atoms_V2.png)
 ![moovatom](/indev/moovatom.png)
 ![moovatom2](/indev/moovatom2.png)
