@@ -1,0 +1,143 @@
+main() - /fftools/ffprobe.c
+probe_file() - /fftools/ffprobe.c
+open_input_file() - /fftools/ffprobe.c
+avformat_open_input() - /libavformat/demux.c
+AVFormatContext::AVInputFormat::read_header() - /libavformat/avformat.h
+mov_read_header() - /libavformat/mov.c
+mov_read_default() - /libavformat/mov.c (called 20 times! fails on 9th or 10th recursive call)
+
+alastair@MIDNIGHT:/mnt/d/ffmpeg$ sudo make -j10
+CC      libavformat/mov.o
+libavformat/mov.c: In function ‘mov_read_default’:
+libavformat/mov.c:7771:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 7771 |     int64_t total_size = 0;
+      |     ^~~~~~~
+libavformat/mov.c: In function ‘mov_read_header’:
+libavformat/mov.c:8411:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 8411 |     MOVContext *mov = s->priv_data;
+      |     ^~~~~~~~~~
+AR      libavformat/libavformat.a
+LD      ffmpeg_g
+LD      ffprobe_g
+STRIP   ffprobe
+STRIP   ffmpeg
+alastair@MIDNIGHT:/mnt/d/ffmpeg$ ./test
+ffprobe version N-108547-gaaf4109a5f Copyright (c) 2007-2022 the FFmpeg developers
+  built with gcc 9 (Ubuntu 9.4.0-1ubuntu1~20.04.1)
+  configuration: --disable-x86asm
+  libavutil      57. 39.100 / 57. 39.100
+  libavcodec     59. 50.100 / 59. 50.100
+  libavformat    59. 34.100 / 59. 34.100
+  libavdevice    59.  8.101 / 59.  8.101
+  libavfilter     8. 49.101 /  8. 49.101
+  libswscale      6.  8.112 /  6.  8.112
+  libswresample   4.  9.100 /  4.  9.100
+[TEST]: Build
+[TEST]: Pixel Format 1
+[TEST]: Probe File - Entry
+[TEST]: Probe File - Open File
+[TEST]: Open Input File - Entry
+[TEST]: Open Input File - Find Stream Info Start
+[TEST]: Open Input - Entry
+[TEST]: Read Header - Start - mov,mp4,m4a,3gp,3g2,mj2
+[TEST]: MOV Read Header - Entry
+[TEST]: MOV Read Header - Error Start
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - ftyp
+[TEST]: MOV Read Default - free
+[TEST]: MOV Read Default - mdat
+[TEST]: MOV Read Default - moov
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - mvhd
+[TEST]: MOV Read Default - trak
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - tkhd
+[TEST]: MOV Read Default - edts
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - elst
+[TEST]: MOV Read Default - mdia
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - mdhd
+[TEST]: MOV Read Default - hdlr
+[TEST]: MOV Read Default - minf
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - vmhd
+[TEST]: MOV Read Default - dinf
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - dref
+[TEST]: MOV Read Default - stbl
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - stsd
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - avcC
+[TEST]: MOV Read Default - colr
+[TEST]: MOV Read Default - btrt
+[TEST]: MOV Read Default - stts
+[TEST]: MOV Read Default - stss
+[TEST]: MOV Read Default - ctts
+[TEST]: MOV Read Default - stsc
+[TEST]: MOV Read Default - stsz
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x559cfcbea100] stream 0, missing mandatory atoms, broken header
+[TEST]: MOV Read Default - trak
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - tkhd
+[TEST]: MOV Read Default - edts
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - elst
+[TEST]: MOV Read Default - mdia
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - mdhd
+[TEST]: MOV Read Default - hdlr
+[TEST]: MOV Read Default - minf
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - smhd
+[TEST]: MOV Read Default - dinf
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - dref
+[TEST]: MOV Read Default - stbl
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - stsd
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - esds
+[TEST]: MOV Read Default - btrt
+[TEST]: MOV Read Default - stts
+[TEST]: MOV Read Default - stsc
+[TEST]: MOV Read Default - stsz
+[TEST]: MOV Read Default - stco
+[TEST]: MOV Read Default - udta
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - name
+[TEST]: MOV Read Default - udta
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - meta
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - hdlr
+[TEST]: MOV Read Default - ilst
+[TEST]: MOV Read Default - Entry
+[TEST]: MOV Read Default - too
+[TEST]: MOV Read Header - Error Checkpoint
+[TEST]: MOV Read Header - on_parse_exit_offset=3911497348
+[TEST]: MOV Read Header - Error End
+[TEST]: Read Header - End
+[TEST]: Open Input File - Find Stream Info End
+[TEST]: Open Input File - Find Stream Options Start
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x559cfcbea100] Could not find codec parameters for stream 0 (Video: h264 (avc1 / 0x31637661), none(tv, bt709), 1920x1080): unspecified pixel format
+Consider increasing the value for the 'analyzeduration' (0) and 'probesize' (5000000) options
+[TEST]: Open Input File - Find Stream Options End
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/mnt/c/users/alastair/downloads/2022-10-04 19-11-45-duplicate-moov - Copy.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf59.16.100
+  Duration: 00:16:16.64, start: 0.000000, bitrate: 32040 kb/s
+  Stream #0:0[0x1](und): Video: h264 (avc1 / 0x31637661), none(tv, bt709), 1920x1080, 60 fps, 90k tbr, 90k tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 193 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+[TEST]: Pixel Format 2
+alastair@MIDNIGHT:/mnt/d/ffmpeg$
