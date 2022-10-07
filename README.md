@@ -21,7 +21,7 @@ to fix and recover corrupted digital media files that were encoded incorrectly a
 # Update
 The solution was found in this case to be an invalid `stsz` header size set to 0 \
 by OBS Studio to indicate an encoding failure. Calculating the number of bytes between \
-the `stsz` and `stco` headers (for video, not audio) and then placing this number in the \
+the `stsz` and `stco` headers (for video, not audio) and then placing this hex number in the \
 32-bit (4-byte) gap before the bytes for `stsz` fixed the video making it half playable. \
 The result of this recovery process is available to watch on YouTube at the following link: \
-<pending>
+https://www.youtube.com/watch?v=0zqy77Wgc-I
