@@ -1,1 +1,1 @@
-![screenshot](/IntelUnityShaderLabSDK_Tests\MiscDarkRoomShaders\Depth\screenshot.png)
+![screenshot](/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Depth/screenshot.png)
