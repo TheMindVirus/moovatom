@@ -8,3 +8,8 @@
 ![screenshot6](/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Depth/screenshot6.png)
 ![screenshot7](/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Depth/screenshot7.png)
 ![screenshot8](/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Depth/screenshot8.png)
+```hs
+//Experimental View 4
+half3 inter = rotate(input.vertex.xyz, half3(output.viewport.x * (_Debug.x * _Debug.w), output.viewport.y * (_Debug.y * _Debug.w), (_Debug.z * _Debug.w)));
+half4 matmv = mul(UNITY_MATRIX_MV, half4(0.0f, 0.0f, 0.0f, 1.0f)) + half4(inter, 0.0f);
+```
