@@ -1,0 +1,28 @@
+[UNITY_MATRIX_I_V][Default Facing Towards Unity +Z]
+Recordings are subject to subjective rotation direction bias
+[0].x = Camera Y Rotation (Cosine) (-Sine of +X Facing)
+[0].y = Camera Z Rotation (-Sine)
+[0].z = Camera Y Rotation (-Sine)
+[0].w = Camera X Position
+[1].x = Camera Z Rotation (Sine)
+[1].y = Camera X Rotation (Cosine)
+[1].z = Camera X Rotation (-Sine)
+[1].w = Camera Y Position
+[2].x = Camera Y Rotation (-Sine)
+[2].y = Camera X Rotation (Sine)
+[2].z = Camera Y Rotation (-Cosine)
+[2].w = Camera Z Position
+[3].x = 0
+[3].y = 0
+[3].z = 0
+[3].w = 1
+This encoding is at best misleading.
+Forward is +Z and Right is +X where +Y is Up.
+Other Forward is +X and Left is +Y where +Z is Up.
+However, it is in effect as of Unity 2019.4.40f1.
+This is the engine version that Tabletop Simulator
+chose to migrate to. It has not been documented.
+[RY,RZ,RY,PX]
+[RZ,RX,RX,PY]
+[RY,RX,RY,PZ]
+[ 0, 0, 0, 1]
