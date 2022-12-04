@@ -98,7 +98,7 @@ Shader "Custom/CableDepth"
                         output.chroma.rgb *= _Chroma.rgb + (_Emission.rgb * 0.01);
                         output.chroma.a = _Chroma.a;
                     }
-                    output.depth = -sf * -0.1 * _ZS;
+                    output.depth = -sf * -0.1 * _ZS; //Only last point buffered, requires an array of size _Scale
                 }
                 return output;
             }
