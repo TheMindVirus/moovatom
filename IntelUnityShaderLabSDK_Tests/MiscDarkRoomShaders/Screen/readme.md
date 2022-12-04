@@ -1,6 +1,6 @@
 # Screen
 
 Screen-Space Billboard Projection (potentially flawed)
-![screenshot](https://github.com/themindvirus/moovatom/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Screen/screenshot.png)
+![screenshot](https://github.com/themindvirus/moovatom/blob/main/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Screen/screenshot.png)
 Single-Pass Multi-Billboard Shader
-![screenshot2](https://github.com/themindvirus/moovatom/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Screen/screenshot2.png)
+![screenshot2](https://github.com/themindvirus/moovatom/blob/main/IntelUnityShaderLabSDK_Tests/MiscDarkRoomShaders/Screen/screenshot2.png)
