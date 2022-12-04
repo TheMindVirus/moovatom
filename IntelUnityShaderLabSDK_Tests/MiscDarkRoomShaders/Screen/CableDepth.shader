@@ -13,7 +13,7 @@ Shader "Custom/CableDepth"
     }
     SubShader
     {
-        Tags { "Queue" = "Transparent" "RenderType" = "Opaque" }
+        Tags { "Queue" = "Transparent+1" "RenderType" = "Opaque" } //Transparent 3000 will conflict with objects
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
         //ZWrite Off
