@@ -24,14 +24,14 @@
 
             struct appdata_unity
             {
-                float4 vertex : POSITION;
+                fixed4 vertex : POSITION;
             };
 
             struct appdata_vertex
             {
-                float4 vertex : VERTEX;
-                float4 screen : SV_POSITION;
-                float4 chroma : COLOR;
+                fixed4 vertex : VERTEX;
+                fixed4 screen : SV_POSITION;
+                fixed4 chroma : COLOR;
             };
 
             appdata_vertex vertex_shader(appdata_unity input)
