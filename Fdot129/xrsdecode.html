@@ -1,0 +1,126 @@
+<script>
+var _Translation = [0.0, -0.0, 7.7, -7.61]; //Test -7.61, should be 16
+var _Rotation = [0.0, -0.0, 7.7, -7.7];
+var _Scale = [0.0, -0.0, 7.7, -7.7];
+
+window.onload = function()
+{
+    canvas = document.createElement("canvas");
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
+    canvas.style.imageRendering = "pixelated";
+    document.body.appendChild(canvas);
+    window.onresize();
+    ctx = canvas.getContext("2d", { willReadFrequently: true });
+    interval = setInterval(render, 10);
+    clearInterval(interval);
+    render();
+}
+
+window.onresize = function()
+{
+    var style = window.getComputedStyle(canvas);
+    cw = canvas.width = parseFloat(style.width);
+    ch = canvas.height = parseFloat(style.height);
+}
+
+mmio_read = function(address)
+{
+    if (address < 4) { return _Translation[address]; }
+    else if (address < 8) { return _Rotation[address - 4]; }
+    else if (address < 12) { return _Scale[address - 8]; }
+    else { return 0; }
+}
+
+render = function()
+{
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = "#000000FF";
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.fillStyle = "#FFFFFFFF";
+    //var x, y, value, result = 0;
+    var x = 0, y = 0, value = 0, result = 0;
+    var sx = 129, sy = 12, s = sx * sy;
+    var ox = cw / sx, oy = ch / sy;
+    for (var i = 0; i < s; ++i)
+    {
+        value = mmio_read(y);
+        result = Fdot129(value, x);
+        if (result != 0) { ctx.fillRect(x * ox, y * oy, ox, oy); }
+        ++x; if (x >= sx) { x = 0; ++y; }
+    }
+    decode();
+}
+
+decode = function(sx = 129, sy = 12, n = 64)
+{
+    var s = sx * sy;
+    var x = 0, y = 0, value = 0, result = 0, negate = 0, fract = 0;
+    var ox = cw / sx, oy = ch / sy, hx = ox / 2, hy = oy / 2;
+    var spacing = 0.000001;
+    var pixel = new ImageData(sx, sy);
+    for (var i = 0; i < s; ++i)
+    {
+        pixel = ctx.getImageData(x * ox + hx, y * oy + hy, 1, 1);
+        value = ((pixel.data[0] + pixel.data[1] + pixel.data[2]) / 3) * (pixel.data[3] / 255);
+        if (value != 0)
+        {
+            if (x < 64) { result += Math.pow(2, n - x - 1); }
+            else if (x > 64) { fract += Math.pow(2, x - n - 1); }
+        }
+        else if (x == 64) { negate = 1; }
+        ++x; if (x >= sx)
+        {
+            x = 0; ++y;
+            fract = backwards(fract);
+            //console.log(fract);
+            result += fract;
+            result *= (negate == 1) ? -1 : 1;
+            console.log(result);
+            result = 0.0;
+            fract = 0.0;
+        }
+    }
+}
+
+sdrawkcab = function(frac, dp = 6)
+{
+    var rev = 0;
+    for (var i = dp; i > 0; --i)
+    {
+        rev += (parseInt(frac * Math.pow(10, i)) % 10) * Math.pow(10, i - 1);
+    }
+    return rev;
+}
+
+backwards = function(tion, dp = 6)
+{
+    var rev = 0;
+    for (var i = 0; i < dp; ++i)
+    {
+        rev += (parseInt(tion / Math.pow(10, i)) % 10) / Math.pow(10, i + 1);
+    }
+    return rev;
+}
+
+Fdot129 = function(value, bit, n = 64, dp = 6)
+{
+    if (bit == n) { return (value.toLocaleString()[0] == '-') ? 0 : 1; } //toString not functional enough for you?
+    else if (bit < n)
+    {
+        var index = Math.pow(2, n - bit);
+        var absol = Math.floor(Math.abs(value));
+        return ((absol % index) >= (index / 2)) ? 1 : 0;
+    }
+    else if (bit > n)
+    {
+        var index = Math.pow(2, bit - n);
+        var absol = sdrawkcab(Math.abs(value) - Math.floor(Math.abs(value)));
+        return ((absol % index) >= (index / 2)) ? 1 : 0;
+    }
+    else { return 0; }
+}
+</script>
