@@ -1,0 +1,103 @@
+<script>
+var canvas = null;
+var ctx = null;
+var rkd = null;
+var w = null;
+var h = null;
+var grid = null;
+var n = 20;
+var n1 = n + 1;
+var f = 50;
+var t = 3;
+var b = 5;
+
+window.onload=()=>
+{
+    document.body.style.margin = "auto";
+    document.body.style.overflow = "hidden";
+    canvas = document.createElement("canvas");
+    document.body.appendChild(canvas);
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    ctx = canvas.getContext("2d");
+    generate();
+    window.onresize();
+    setInterval(() => { generate(); window.onresize(); }, 200);
+}
+
+window.onresize=()=>
+{
+    rkd = window.getComputedStyle(canvas);
+    canvas.width = parseFloat(rkd.width);
+    canvas.height = parseFloat(rkd.height);
+    canvas.style.shapeRendering = "geometricPrecision";
+    w = canvas.width;
+    h = canvas.height;
+    draw();
+}
+
+var generate=()=>
+{
+    grid = new Array(n);
+    for (var i = 0; i < n; ++i)
+    {
+        grid[i] = new Array(n);
+        for (var j = 0; j < n; ++j)
+        {
+            grid[i][j] = new Array(2);
+            grid[i][j][0] = (Math.random() * 2.0) - 1.0;
+            grid[i][j][1] = (Math.random() * 2.0) - 1.0;
+        }
+    }
+}
+
+var draw=()=>
+{
+    ctx.fillStyle = "rgba(0, 0, 0, 1.0)";
+    ctx.fillRect(0, 0, w, h);
+    ctx.shadowColor = "rgba(255, 0, 40, 1.0)";
+    ctx.shadowBlur = b;
+    ctx.strokeStyle = "rgba(255, 0, 40, 1.0)";
+    ctx.lineWidth = t;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    for (var i = 0; i <= n1; ++i)
+    {
+        ctx.beginPath();
+        ctx.moveTo(0, i * (h / n1));
+        for (var j = 0; j < n; ++j)
+        {
+            var ox = 0;
+            var oy = 0;
+            if ((i > 0) && (i <= n))
+            {
+                ox = f * grid[i - 1][j][0];
+                oy = f * grid[i - 1][j][1];
+            }
+            ctx.lineTo(((j + 1) * (w / n1)) + ox, (i * (h / n1)) + oy);
+        }
+        ctx.lineTo(w, i * (h / n1));
+        ctx.stroke();
+    }
+
+    for (var i = 0; i <= n1; ++i)
+    {
+        ctx.beginPath();
+        ctx.moveTo(i * (w / n1), 0);
+        for (var j = 0; j < n; ++j)
+        {
+            var ox = 0;
+            var oy = 0;
+            if ((i > 0) && (i <= n))
+            {
+                ox = f * grid[j][i - 1][0];
+                oy = f * grid[j][i - 1][1];
+            }
+            ctx.lineTo((i * (w / n1)) + ox, ((j + 1) * (h / n1)) + oy);
+        }
+        ctx.lineTo(i * (w / n1), h);
+        ctx.stroke();
+    }
+}
+</script>
