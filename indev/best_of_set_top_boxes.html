@@ -1,0 +1,171 @@
+<!DOCTYPE xml>
+<device id=":P-1" name="TVS" port="DVI">
+  <device id=":P-1" name="AVR" port="HDMI" available="7">
+    <device id=":P-7" name="AUX" port="HDMI" unpopulated></device>
+    <device id=":P-6" name="XBX" port="HDMI" available="1">
+      <device id=":P-1" name="WIN" port="HDMI" available="4">
+        <adapter id=":P-1" name="AD6" port="HDMI" input="RCA">
+          <stream id=":P-1" name="WII" port="RCA"></stream>
+        </adapter>
+        <adapter id=":P-2" name="AD7" port="HDMI" input="RCA">
+          <stream id=":P-1" name="PS2" port="RCA"></stream>
+        </adapter>
+        <adapter id=":P-3" name="AD8" port="HDMI" input="HDMI">
+          <stream id=":P-1" name="NVS" port="HDMI"></stream>
+        </adapter>
+        <adapter id=":P-4" name="AD9" port="HDMI" input="RCA">
+          <stream id=":P-1" name="AST" port="RCA"></stream>
+        </adapter>
+      </device>
+    </device>
+    <device id=":P-5" name="STM" port="HDMI">
+      <stream id=":P-1" name="WIN" port="RDP"></stream>
+    </device>
+    <device id=":P-4" name="ATV" port="HDMI">
+      <stream id=":P-1" name="IOS" port="AirPlay"></stream>
+    </device>
+    <device id=":P-3" name="RPI" port="HDMI">
+      <stream id=":P-1" name="ARD" port="CSI"></stream>
+    </device>
+    <device id=":P-2" name="BLU" port="HDMI" available="2">
+      <device id=":P-1" name="AV1" port="SCART" unpopulated></device>
+      <device id=":P-2" name="AV2" port="SCART" available="5">
+        <adapter id=":P-1" name="AD1" port="SCART" input="HDMI" exclusive>
+          <stream id=":P-1" name="NTV" port="HDMI"></stream>
+        </adapter>
+        <adapter id=":P-2" name="AD2" port="SCART" input="HDMI" exclusive>
+          <stream id=":P-1" name="RTV" port="HDMI"></stream>
+        </adapter>
+        <adapter id=":P-3" name="AD3" port="SCART" input="HDMI" exclusive>
+          <stream id=":P-1" name="BMX" port="HDMI"></stream>
+        </adapter>
+        <adapter id=":P-4" name="AD4" port="SCART" input="HDMI" exclusive>
+          <stream id=":P-1" name="HI8" port="HDMI"></stream>
+        </adapter>
+        <adapter id=":P-5" name="AD5" port="SCART" input="HDMI" exclusive>
+          <stream id=":P-1" name="RAK" port="HDMI"></stream>
+        </adapter>
+      </device>
+    </device>
+    <device id=":P-1" name="SKY" port="HDMI" default available="2">
+      <stream id=":P-1" name="Paramount+"></stream>
+      <stream id=":P-2" name="Disney+" default></stream>
+    </device>
+  </device>
+</device>
+<style>
+ * { box-sizing: border-box; margin: auto; font-family: consolas; background: #111; color: #eee; }
+</style>
+<script>
+window.onload = function()
+{
+    noninvasive_recursive_measure_children(document.body);
+    var p = document.createElement("p");
+    p.innerText += document.body.innerHTML;
+    p.style.position = "absolute";
+    p.style.width = "content";
+    p.style.height = "content";
+    p.style.whiteSpace = "pre-wrap";
+    document.body.appendChild(p);
+    p.innerText = p.innerText.replaceAll("id=\"\"", "id");
+    p.innerText = p.innerText.replaceAll(" id>", ">");
+    p.innerText = p.innerText.replaceAll("default=\"\"", "default");
+    p.innerText = p.innerText.replaceAll("unpopulated=\"\"", "unpopulated");
+    p.innerText = p.innerText.replaceAll("exclusive=\"\"", "exclusive");
+}
+
+var noninvasive_recursive_measure_children = function(element, eye = 0, level = 0)
+{
+    for (var i = 0; i < element.children.length; ++i)
+    {
+        if (element.children[i].hasAttribute("id"))
+        {
+            var lvl = level;
+            var tmp = element.children[i].parentNode.id;
+            tmp = tmp.substr(tmp.indexOf("-") + 1);
+            var p = parseInt(tmp); if (!p) { p = 1; }
+            element.children[i].id = element.children[i].id.replaceAll(":P", "#" + (p    ));
+            element.children[i].id = element.children[i].id.replaceAll(":I", "#" + (i    ));
+            element.children[i].id = element.children[i].id.replaceAll(":C", "#" + (i + 1));
+            element.children[i].id = element.children[i].id.replaceAll(":K", "#" + (lvl+1));
+            element.children[i].id = element.children[i].id.replaceAll(":L", "#" + (lvl  ));
+            element.children[i].id = element.children[i].id.replaceAll(":E", "#" + (eye  ));
+            element.children[i].id = element.children[i].id.replaceAll(":S", "#" + (eye+1));
+        }
+        noninvasive_recursive_measure_children(element.children[i], i, level + 1);
+    }
+}
+</script>
+<!--
+
+[in no particular order]
+
+Xbox One (One) |
+Playstation Two (Two) |
+Nintendo Wii (Three) |
+Sky/Sling Box (Four) |
+Spotify AVR Receiver (Five) |
+Apple TV (Watch Mac iOS) (Six) |
+NVidia Shield (Seven) |
+Cassette Hi-8 (Eight) |
+Steam Link (Nine) |
+Microsoft Windows (Ten) |
+Raspberry Pi (Eleven) |
+Arduino (Twelve) |
+Paramount+ (Thirteen) |
+Disney+ (Fourteen) |
+Sharp Betamax (Fifteen) |
+Now TV (Sixteen) |
+Rakuten (Seventeen) |
+Roku TV (Eighteen) |
+Atari ST (Nineteen) |
+BluRay iLink (Twenty) |
+
+20+ devices, 1 HDMI Port
+
+AVR Receiver has 7 HDMI Ports plus ARC
+
+1 HDMI Port gets used up for Spotify AVR Receiver with none left on the TV
+
+1 HDMI Port is on the front of the Spotify AVR Receiver and is fragile or doesn't get plugged in
+
+6 HDMI Ports Remaining
+
+1 HDMI Port is used for Xbox One which has 1 capture card in it
+
+1 HDMI Port is used for Microsoft Windows which has a quad capture card in it
+
+4 HDMI Capture Ports for supported devices only
+
+1 HDMI Port is used for Nintendo Wii
+
+1 HDMI Port is used for Playstation Two
+
+1 HDMI Port is used for Nvidia Shield
+
+1 HDMI Port is used for Atari ST
+
+5 HDMI Ports Remaining
+
+1 HDMI Port is used for Steam Link which can stream Microsoft Windows
+
+1 HDMI Port is used for Apple TV which can stream iOS devices
+
+1 HDMI Port is used for Raspberry Pi which can stream Arduino Devices
+
+1 HDMI Port is used for BluRay iLink which can accommodate only 5 more devices through SCART Adapters
+
+1 SCART Port is used for Now TV
+
+1 SCART Port is used for Roku TV
+
+1 SCART Port is used for Sharp Betamax
+
+1 SCART Port is used for Cassette Hi-8
+
+1 SCART Port is used for Rakuten
+
+1 HDMI Port is remaining and it is for Sky / Slingbox which can stream Disney+ and Paramount+
+
+0 HDMI Ports remaining, 0 HDMI Ports left to connect, 5 SCART Ports added
+-->
